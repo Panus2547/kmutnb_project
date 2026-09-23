@@ -2,6 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../css/Auth.css"; // 🟢 Import CSS จากโฟลเดอร์ css
 
+// ดึง API URL จาก Env ของ Vite ถ้าไม่มีให้ชี้ไปที่ Render
+const API_BASE_URL = import.meta.env.VITE_API_URL || "https://spms-backend-ry26.onrender.com";
+
 function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +17,7 @@ function Auth() {
     setLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/login`, {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
