@@ -1,0 +1,553 @@
+/* ============================================================
+   DashboardTheme.css
+   ธีม "เขียว–ขาว" มินิมอล สำหรับหน้าแผนงานงบประมาณ
+   วางไฟล์นี้ไว้ที่ src/css/DashboardTheme.css
+   ============================================================ */
+
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;500;600;700&display=swap");
+
+.dashboard-container {
+  /* สี */
+  --leaf: #1f7a52;
+  --leaf-deep: #15563a;
+  --leaf-soft: #eaf5ee;
+  --paper: #f7faf8;
+  --white: #ffffff;
+  --line: #dde8e1;
+  --ink: #1a2b22;
+  --ink-muted: #6d7f75;
+  --danger: #b4443c;
+
+  /* ระยะ/มุม */
+  --r-sm: 6px;
+  --r-md: 10px;
+
+  font-family: "IBM Plex Sans Thai", "Sarabun", system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  color: var(--ink);
+  background: var(--paper);
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 32px 28px 64px;
+  min-height: 100vh;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- หัวหน้าเพจ ---------- */
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 18px;
+  border-bottom: 2px solid var(--leaf);
+}
+
+.dashboard-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--leaf-deep);
+}
+
+.divider {
+  display: none; /* เส้นใต้หัวเพจแทนแล้ว ไม่ต้องมีเส้นซ้ำ */
+}
+
+.dashboard-container h4 {
+  margin: 18px 0 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+}
+
+/* ---------- ปุ่มทั่วไป ---------- */
+.dashboard-container button {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: var(--r-sm);
+  border: 1px solid transparent;
+  padding: 9px 16px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.dashboard-container button:focus-visible {
+  outline: 2px solid var(--leaf);
+  outline-offset: 2px;
+}
+
+/* ปุ่ม "+ เพิ่มแผนงาน" */
+.dashboard-container > button {
+  background: var(--leaf);
+  color: var(--white);
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+.dashboard-container > button:hover {
+  background: var(--leaf-deep);
+}
+
+/* ปุ่มออกจากระบบ */
+.btn-logout {
+  background: transparent;
+  color: var(--ink-muted);
+  border-color: var(--line);
+}
+.btn-logout:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: var(--white);
+}
+
+/* ---------- แถบค้นหา/ตัวกรอง ---------- */
+.dashboard-container form {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  padding: 20px;
+  margin-bottom: 18px;
+}
+
+.dashboard-container form label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+}
+
+.dashboard-container form input,
+.dashboard-container form select {
+  width: 100%;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--ink);
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  padding: 9px 12px;
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dashboard-container form input::placeholder {
+  color: #a9b8b0;
+}
+
+.dashboard-container form input:focus,
+.dashboard-container form select:focus {
+  outline: none;
+  border-color: var(--leaf);
+  box-shadow: 0 0 0 3px rgba(31, 122, 82, 0.12);
+}
+
+.dashboard-container form button[type="submit"] {
+  width: 100%;
+  background: var(--leaf);
+  color: var(--white);
+}
+.dashboard-container form button[type="submit"]:hover {
+  background: var(--leaf-deep);
+}
+
+.dashboard-container form button[type="button"] {
+  width: 100%;
+  background: var(--white);
+  color: var(--ink-muted);
+  border-color: var(--line);
+}
+.dashboard-container form button[type="button"]:hover {
+  color: var(--leaf-deep);
+  border-color: var(--leaf);
+  background: var(--leaf-soft);
+}
+
+/* จัดกริดฟอร์มเอง เผื่อไม่ได้ติดตั้ง Tailwind */
+.dashboard-container form > div {
+  display: grid;
+  gap: 14px;
+  align-items: end;
+}
+.dashboard-container form > div:first-child {
+  grid-template-columns: 2fr 1fr;
+  margin-bottom: 14px;
+}
+.dashboard-container form > div:last-child {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* ---------- แถบค้นหา/ตัวกรอง (เจาะจงด้วย .search-panel กันชนกับฟอร์มใน Modal) ---------- */
+.search-panel {
+  background: var(--white);
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.search-panel .search-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.search-panel .search-row:last-child {
+  margin-bottom: 0;
+  align-items: flex-end;
+}
+
+.search-panel .search-field {
+  flex: 1 1 150px;
+}
+.search-panel .search-field-wide {
+  flex: 2 1 300px;
+}
+.search-panel .search-field-status {
+  flex: 1 1 180px;
+}
+
+.search-panel .search-field label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.search-panel .search-field input,
+.search-panel .search-field select {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.search-panel .search-checkbox-field {
+  padding-bottom: 8px;
+}
+
+.search-panel .search-checkbox-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+  cursor: pointer;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.search-panel .search-checkbox-label input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: #1b4332;
+}
+
+.search-panel .search-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
+
+.search-panel .search-actions .btn-search {
+  padding: 8px 20px;
+  background: #1b4332;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.search-panel .search-actions .btn-reset {
+  padding: 8px 14px;
+  background: #e2e8f0;
+  color: #475569;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* ---------- บรรทัดสรุปผลการค้นหา ---------- */
+.dashboard-container > p {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  margin: 0 0 16px;
+}
+.dashboard-container > p span {
+  color: var(--leaf-deep);
+  font-weight: 600;
+}
+
+/* ============================================================
+   ตาราง
+   ============================================================ */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.plans-table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: 1px solid #d1d5db;
+}
+
+.plans-table th,
+.plans-table td {
+  border: 1px solid #e5e7eb;
+  padding: 8px 6px;
+  font-size: 13px;
+  vertical-align: middle;
+  overflow-wrap: break-word;
+}
+
+/* ข้อมูลในตารางทั้งหมดชิดซ้าย (หัวตารางยังคงจัดกึ่งกลางแยกไว้ด้านล่าง) */
+.plans-table tbody td {
+  text-align: left;
+}
+
+/* หัวตาราง */
+.plans-table thead {
+  background-color: var(--leaf-deep);
+}
+.plans-table thead th {
+  color: var(--white);
+  font-weight: 600;
+  text-align: center;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+.plans-table thead tr:nth-child(2) th {
+  background-color: var(--leaf);
+}
+
+/* แถวสลับสี / hover */
+.plans-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+.plans-table tbody tr:hover {
+  background-color: #f3f4f6;
+}
+
+.plans-table .col-plan-name,
+.plans-table .font-semibold {
+  font-weight: 600;
+  color: var(--leaf-deep);
+}
+
+/* เส้นเขียวบางคั่นระหว่างแผนงานแต่ละรายการ
+   (เซลล์ที่มี rowSpan คือจุดเริ่มต้นของแผนงานใหม่) */
+.plans-table tbody td[rowspan] {
+  border-top: 2px solid var(--leaf-soft);
+  background: var(--white);
+}
+
+
+/* ---------- ความกว้างคอลัมน์ (อิงจาก <colgroup> ใน JSX) ---------- */
+.col-id            { width: 3%; }
+.col-plan-name     { width: 15%; }
+.col-status        { width: 9%; }
+.col-schedule      { width: 6%; }
+.col-kpi-kpi       { width: 7%; }
+.col-kpi-unit      { width: 4%; }
+.col-kpi-target    { width: 4%; }
+.col-kpi-result    { width: 4%; }
+.col-kpi-process   { width: 4%; }
+.col-performance   { width: 14%; }
+.col-budget        { width: 8%; }
+.col-issues        { width: 11%; }
+.col-user          { width: 6%; }
+.col-delete        { width: 5%; }
+
+.col-id { text-align: center; padding: 4px 2px; }
+
+/* ---------- แท็กสถานะ ---------- */
+.status-tag {
+  display: inline-block;
+  box-sizing: border-box;
+  max-width: 100%;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.3;
+  white-space: normal;      /* ให้ตัดขึ้นบรรทัดใหม่แทนการล้นออกนอกเซลล์ */
+  overflow-wrap: break-word;
+  text-align: center;
+  background: var(--leaf-soft);
+  color: var(--leaf-deep);
+  border: 1px solid #cfe5d8;
+}
+.status-tag.is-done {
+  background: #e3f2e9;
+  color: #14603f;
+  border-color: #bcdcc8;
+}
+.status-tag.is-cancelled {
+  background: #f6eceb;
+  color: var(--danger);
+  border-color: #e6cfcd;
+}
+
+/* ---------- งบประมาณ / ผู้รับผิดชอบ ---------- */
+.budget-info {
+  padding: 4px 0;
+  border-bottom: 1px dotted var(--line);
+  font-variant-numeric: tabular-nums;
+}
+.budget-info:last-child {
+  border-bottom: none;
+}
+.budget-source {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+}
+.budget-info strong {
+  color: var(--leaf-deep);
+}
+
+.cell-performance,
+.cell-problems {
+  min-width: 160px;
+  color: var(--ink);
+}
+
+.user-info strong {
+  font-weight: 500;
+}
+.text-muted {
+  color: var(--ink-muted);
+  font-size: 0.75rem;
+}
+
+/* ---------- ปุ่มในคอลัมน์จัดการ ---------- */
+.plans-table td button {
+  display: block;
+  width: 100%;
+  margin-bottom: 6px;
+  padding: 6px 10px;
+  font-size: 0.78rem;
+  white-space: nowrap;
+}
+.plans-table td button:last-child {
+  margin-bottom: 0;
+  background: var(--white);
+  color: var(--leaf-deep);
+  border-color: var(--leaf);
+}
+.plans-table td button:last-child:hover {
+  background: var(--leaf);
+  color: var(--white);
+}
+
+.plans-table td .btn-delete {
+  background: var(--white);
+  color: var(--danger);
+  border: 1px solid #e6cfcd;
+  margin-right: 0;
+}
+.plans-table td .btn-delete:hover {
+  background: var(--danger);
+  color: var(--white);
+  border-color: var(--danger);
+}
+
+/* ---------- สถานะว่าง / กำลังโหลด ---------- */
+.empty-state,
+.loading-state {
+  font-family: "IBM Plex Sans Thai", "Sarabun", system-ui, sans-serif;
+  background: var(--white);
+  border: 1px dashed var(--line);
+  border-radius: var(--r-md);
+  color: var(--ink-muted);
+  padding: 48px 24px;
+  text-align: center;
+  font-size: 0.95rem;
+}
+.loading-state {
+  margin: 80px auto;
+  max-width: 420px;
+  border-style: solid;
+}
+
+/* ---------- จอเล็ก ---------- */
+@media (max-width: 900px) {
+  .dashboard-container {
+    padding: 20px 14px 48px;
+  }
+  .dashboard-container form > div:first-child,
+  .dashboard-container form > div:last-child {
+    grid-template-columns: 1fr;
+  }
+  .dashboard-title {
+    font-size: 1.2rem;
+  }
+}
+
+/* ---------- ตัวเลื่อนหน้า (pagination) ---------- */
+.pagination {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.pagination-nav,
+.pagination-page {
+  padding: 4px 10px;
+  border: 1px solid #ccc;
+  border-radius: var(--r-sm);
+  background: var(--white);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.pagination-nav:disabled {
+  cursor: not-allowed;
+  color: var(--ink-muted);
+}
+
+.pagination-page {
+  min-width: 32px;
+}
+
+.pagination-page.is-active {
+  font-weight: 700;
+  background: var(--leaf-deep);
+  color: var(--white);
+  border-color: var(--leaf-deep);
+}
+
+.pagination-summary {
+  margin-left: 10px;
+  font-size: 14px;
+  color: var(--ink-muted);
+}
+
+/* ---------- เคารพการตั้งค่าลดการเคลื่อนไหว ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .dashboard-container * {
+    transition: none !important;
+  }
+}

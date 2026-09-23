@@ -1,0 +1,113 @@
+/* --- Login Page Styles (Green Theme) --- */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: border-center;
+  align-items: center;
+  justify-content: center;
+  background-color: #f4f7f6;
+  font-family: 'Sarabun', sans-serif;
+  padding: 20px;
+}
+
+.auth-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  border-top: 5px solid #145da0; /* ใช้สีโทนเขียวเข้มแบบ Dashboard */
+  border: 1px solid #e2e8f0;
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.auth-header h2 {
+  color: #1b4332;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.auth-header p {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.auth-form .form-group {
+  margin-bottom: 20px;
+}
+
+.auth-form label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 6px;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: #2d6a4f;
+  box-shadow: 0 0 0 3px rgba(45, 106, 79, 0.15);
+}
+
+.auth-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.btn-submit {
+  width: 100%;
+  padding: 12px;
+  background-color: #1b4332;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-submit:hover:not(:disabled) {
+  background-color: #2d6a4f;
+}
+
+.btn-submit:disabled {
+  background-color: #a3b18a;
+  cursor: not-allowed;
+}
+
+.btn-register-link {
+  width: 100%;
+  padding: 10px;
+  background-color: transparent;
+  color: #2d6a4f;
+  border: 1px solid #2d6a4f;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-register-link:hover {
+  background-color: #f0fdf4;
+}
