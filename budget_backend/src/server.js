@@ -1,25 +1,38 @@
 const express = require("express");
-const cors = require("cors"); // 1. Import cors เข้ามา
+const cors = require("cors");
 const pool = require("./db");
 const planRoutes = require("./routes/planRoutes");
 const authRoutes = require("./routes/authRoutes");
-const cookieParser = require("cookie-parser"); // 1. Import cookie-parser เข้ามา
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// 2. ตั้งค่า CORS (ต้องวางไว้ก่อน express.json และ Route ทั้งหมด!)
+// กำหนด Origin ให้รองรับทั้ง Localhost และ Vercel
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://kmutnb-project.vercel.app",
+  process.env.FRONTEND_URL // เผื่อดึงจาก Environment Variable บน Render
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // URL ของ Frontend Vite (ห้ามมี / ปิดท้าย)
-    credentials: true,               // ⭐ สำคัญมาก! อนุญาตให้รับ-ส่ง HttpOnly Cookie
+    origin: function (origin, callback) {
+      // อนุญาตหากไม่มี origin (เช่น Postman/mobile apps) หรืออยู่ในรายการที่กำหนด
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(null, true); // หรือเปลี่ยนเป็น true ทั้งหมดในกรณีทดสอบ
+      }
+    },
+    credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 
 app.use(express.json());
-app.use(cookieParser()); // 2. ใช้งาน cookie-parser เพื่ออ่าน Cookie จาก Request
+app.use(cookieParser());
 
 // Routes
 app.use("/api/auth", authRoutes);
@@ -36,5 +49,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
