@@ -18,11 +18,33 @@ function Dashboard() {
 
   const [onlyMyPlans, setOnlyMyPlans] = useState(false);
 
+  const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState(false);
   // 🟢 1. แยก State คำที่กำลังพิมพ์ (searchTerm) และ คำที่กดค้นหาแล้ว (appliedSearch)
   const [searchTerm, setSearchTerm] = useState("");
   const [appliedSearch, setAppliedSearch] = useState("");
 
+  useEffect(() => {
+    const cookies = document.cookie.split("; ");
+    const userInfoCookie = cookies.find((row) => row.startsWith("user_info="));
+
+    if (userInfoCookie) {
+      try {
+        const cookieValue = decodeURIComponent(userInfoCookie.split("=")[1]);
+        const parsedUser = JSON.parse(cookieValue);
+        
+        // ถ้า role เป็น admin ให้ปรับ State เป็น true
+        if (parsedUser.role === "admin") {
+          setIsAdmin(true);
+        }
+      } catch (err) {
+        console.error("Error parsing user_info cookie:", err);
+      }
+    }
+  }, []);
+
   const handleEditClick = (plan) => {
+    
     setSelectedPlan(plan);
     setIsEditModalOpen(true);
   };
@@ -46,7 +68,7 @@ function Dashboard() {
 
   // 🟢 3. สร้าง State สำหรับเก็บ user
   const [user, setUser] = useState({ username: "Guest", role: "User" });
-  const navigate = useNavigate();
+  
 
   // 🟢 4. กรองข้อมูลเฉพาะเมื่อ appliedSearch มีการเปลี่ยนแปลง
   const filteredPlans = useMemo(() => {
@@ -173,10 +195,23 @@ function Dashboard() {
       👤 ผู้ใช้งาน: {user?.username || "Guest"} | สิทธิ์: {user?.role || "User"}
     </h4>
 
-    <button onClick={() => setIsModalOpen(true)}>
-      + เพิ่มแผนงาน
-    </button>
-{/* --- ฟอร์มค้นหาและตัวกรอง --- */}
+    <button 
+  onClick={() => setIsModalOpen(true)}
+  style={{ marginRight: "16px" }} // 🟢 ดันองค์ประกอบด้านขวาให้อยู่ห่างออกไป 16px
+>
+  + เพิ่มแผนงาน
+</button>
+    
+    {isAdmin && (
+        <button 
+          type="button" 
+          onClick={() => navigate("/admin/users")} // ใส่ path หน้าจัดการผู้ใช้ของคุณ
+          style={{ backgroundColor: "#4CAF50", color: "white", padding: "10px 15px", border: "none", borderRadius: "5px", cursor: "pointer" }}
+        >
+          👥 จัดการผู้ใช้งานระบบ
+        </button>
+      )}
+
 <form onSubmit={handleSearchSubmit} className="search-panel">
   {/* แถวที่ 1: ค้นหาข้อความ + เลือกสถานะ */}
   <div className="search-row">

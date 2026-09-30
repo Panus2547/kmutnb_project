@@ -1,0 +1,240 @@
+/* adminUser.css
+   ใช้ธีมเดียวกับ register.css (เขียวเข้ม/มินต์) — วาง import ไว้บนสุดของ AdminEditUser.jsx แล้ว
+*/
+
+:root {
+  --brand-dark-green: #1a5f4a;
+  --brand-green: #1e8e6f;
+  --brand-green-hover: #166b53;
+  --brand-mint-bg: #e9f7f1;
+  --brand-border: #cfe8dd;
+  --brand-text: #1f2d27;
+  --brand-muted: #5d7a70;
+  --brand-danger: #d64550;
+  --brand-admin-badge: #2f6fed;
+  --card-shadow: 0 4px 16px rgba(26, 95, 74, 0.12);
+}
+
+.admin-page {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f4faf7 0%, #eaf5ef 100%);
+  padding: 28px 24px 48px;
+  font-family: "Sarabun", "Noto Sans Thai", system-ui, sans-serif;
+  color: var(--brand-text);
+}
+
+.admin-page--loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--brand-muted);
+  font-size: 1.05rem;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.admin-header h2 {
+  margin: 0;
+  color: var(--brand-dark-green);
+  font-size: 1.35rem;
+}
+
+.admin-card {
+  background: #ffffff;
+  border: 1px solid var(--brand-border);
+  border-radius: 16px;
+  box-shadow: var(--card-shadow);
+  padding: 24px 28px;
+  margin-bottom: 24px;
+}
+
+.admin-card__title {
+  margin: 0 0 18px;
+  color: var(--brand-dark-green);
+  font-size: 1.1rem;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.admin-field label {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.admin-field .required {
+  color: var(--brand-danger);
+}
+
+.admin-field input,
+.admin-field select {
+  border: 1.5px solid var(--brand-border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  color: var(--brand-text);
+  background: #fbfefc;
+  font-family: inherit;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.admin-field input:focus,
+.admin-field select:focus {
+  outline: none;
+  border-color: var(--brand-green);
+  box-shadow: 0 0 0 3px rgba(30, 142, 111, 0.18);
+}
+
+.admin-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.15s ease, opacity 0.15s ease, transform 0.05s ease;
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--brand-green);
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--brand-green-hover);
+}
+
+.btn-secondary {
+  background: var(--brand-mint-bg);
+  color: var(--brand-dark-green);
+  border: 1.5px solid var(--brand-border);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #ddf0e6;
+}
+
+.btn-edit {
+  background: #fff4e0;
+  color: #a5620a;
+  border: 1.5px solid #f3d9a8;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+}
+
+.btn-edit:hover {
+  background: #ffe9c2;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.admin-table thead th {
+  background: var(--brand-dark-green);
+  color: #ffffff;
+  text-align: left;
+  padding: 12px 14px;
+  font-weight: 600;
+}
+
+.admin-table thead th:first-child {
+  border-top-left-radius: 8px;
+}
+
+.admin-table thead th:last-child {
+  border-top-right-radius: 8px;
+}
+
+.admin-table tbody td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--brand-border);
+}
+
+.admin-table tbody tr:nth-child(even) {
+  background: var(--brand-mint-bg);
+}
+
+.admin-table tbody tr:hover {
+  background: #ddf0e6;
+}
+
+.admin-table__empty {
+  text-align: center;
+  padding: 24px;
+  color: var(--brand-muted);
+}
+
+.role-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.role-badge--user {
+  background: var(--brand-mint-bg);
+  color: var(--brand-green-hover);
+  border: 1px solid var(--brand-border);
+}
+
+.role-badge--admin {
+  background: #e8eeff;
+  color: var(--brand-admin-badge);
+  border: 1px solid #c6d3ff;
+}
+
+/* เพิ่มต่อท้ายไฟล์ ../css/adminUser.css */
+.admin-filter {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 16px;
+  margin-bottom: 16px;
+}
+
+.admin-filter .admin-field {
+  margin-bottom: 0;
+  min-width: 160px;
+}
+
+.admin-filter__search {
+  flex: 1 1 260px;
+}

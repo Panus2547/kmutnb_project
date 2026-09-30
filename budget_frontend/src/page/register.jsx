@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import "../css/register.css";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -43,89 +44,96 @@ function Register() {
   };
 
   return (
-    <div>
-      <h2>สมัครสมาชิก</h2>
-      <form onSubmit={handleRegister}>
-        <div>
-          <label htmlFor="username">ชื่อผู้ใช้:</label>
-          <input
-            id="username"
-            type="text"
-            required
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
+    <div className="register-page">
+      <div className="register-card">
+        <div className="register-card__header">
+          <h2>สมัครสมาชิก</h2>
         </div>
-        <div>
-          <label htmlFor="email">อีเมล:</label>
-          <input
-            id="email"
-            type="email"
-            required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="phone">เบอร์โทรศัพท์:</label>
-          <input
-            id="phone"
-            type="tel"
-            required
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">รหัสผ่าน:</label>
-          <input
-            id="password"
-            type="password"
-            required
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <div>
-        <label htmlFor="role">สิทธิ์ผู้ใช้:</label>
-        <select
-            id="role"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-        >
-            <option value="ภาควิชาครุศาสตร์เครื่องกล">ภาควิชาครุศาสตร์เครื่องกล</option>
-            <option value="ภาควิชาครุศาสตร์ไฟฟ้า">ภาควิชาครุศาสตร์ไฟฟ้า</option>
-            <option value="ภาควิชาครุศาสตร์โยธา">ภาควิชาครุศาสตร์โยธา</option>
-            <option value="ภาควิชาคอมพิวเตอร์ศึกษา">ภาควิชาคอมพิวเตอร์ศึกษา</option>
-            <option value="ภาควิชาครุศาสตร์เทคโนโลยีและสารสนเทศ">ภาควิชาครุศาสตร์เทคโนโลยีและสารสนเทศ</option>
-            <option value="ภาควิชาบริหารเทคนิคศึกษา">ภาควิชาบริหารเทคนิคศึกษา</option>
-            <option value="สำนักงานคณบดี">สำนักงานคณบดี</option>
-            <option value="ศูนย์บูรณาการวิชาชีพครุศาสตร์อุตสาหกรรม">ศูนย์บูรณาการวิชาชีพครุศาสตร์อุตสาหกรรม</option>
-            <option value="other">อื่นๆ (กรอกเอง)...</option>
-        </select>
 
-        {/* แสดงช่องกรอกเองเมื่อเลือก "other" */}
-        {role === "other" && (
-            <div style={{ marginTop: "8px" }}>
-            <label htmlFor="customRole">ระบุหน่วยงาน/สิทธิ์:</label>
+        <form className="register-form" onSubmit={handleRegister}>
+          <div className="register-field">
+            <label htmlFor="username">ชื่อผู้ใช้:</label>
             <input
-                id="customRole"
-                type="text"
-                placeholder="ระบุชื่อหน่วยงานเพิ่มเติม"
-                required
-                value={customRole}
-                onChange={(e) => setCustomRole(e.target.value)}
+              id="username"
+              type="text"
+              required
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
-            </div>
-        )}
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? "กำลังสมัครสมาชิก..." : "สมัครสมาชิก"}
-        </button>
-        <button type="button" onClick={() => navigate("/login")}>
-          กลับไปหน้าเข้าสู่ระบบ
-        </button>
-      </form>
+          </div>
+          <div className="register-field">
+            <label htmlFor="email">อีเมล:</label>
+            <input
+              id="email"
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="register-field">
+            <label htmlFor="phone">เบอร์โทรศัพท์:</label>
+            <input
+              id="phone"
+              type="tel"
+              required
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+            />
+          </div>
+          <div className="register-field">
+            <label htmlFor="password">รหัสผ่าน:</label>
+            <input
+              id="password"
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="register-field">
+          <label htmlFor="role">สิทธิ์ผู้ใช้:</label>
+          <select
+              id="role"
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+          >
+              <option value="ภาควิชาครุศาสตร์เครื่องกล">ภาควิชาครุศาสตร์เครื่องกล</option>
+              <option value="ภาควิชาครุศาสตร์ไฟฟ้า">ภาควิชาครุศาสตร์ไฟฟ้า</option>
+              <option value="ภาควิชาครุศาสตร์โยธา">ภาควิชาครุศาสตร์โยธา</option>
+              <option value="ภาควิชาคอมพิวเตอร์ศึกษา">ภาควิชาคอมพิวเตอร์ศึกษา</option>
+              <option value="ภาควิชาครุศาสตร์เทคโนโลยีและสารสนเทศ">ภาควิชาครุศาสตร์เทคโนโลยีและสารสนเทศ</option>
+              <option value="ภาควิชาบริหารเทคนิคศึกษา">ภาควิชาบริหารเทคนิคศึกษา</option>
+              <option value="สำนักงานคณบดี">สำนักงานคณบดี</option>
+              <option value="ศูนย์บูรณาการวิชาชีพครุศาสตร์อุตสาหกรรม">ศูนย์บูรณาการวิชาชีพครุศาสตร์อุตสาหกรรม</option>
+              <option value="other">อื่นๆ (กรอกเอง)...</option>
+          </select>
+
+          {/* แสดงช่องกรอกเองเมื่อเลือก "other" */}
+          {role === "other" && (
+              <div className="register-field register-field--nested">
+              <label htmlFor="customRole">ระบุหน่วยงาน/สิทธิ์:</label>
+              <input
+                  id="customRole"
+                  type="text"
+                  placeholder="ระบุชื่อหน่วยงานเพิ่มเติม"
+                  required
+                  value={customRole}
+                  onChange={(e) => setCustomRole(e.target.value)}
+              />
+              </div>
+          )}
+          </div>
+          <div className="register-actions">
+            <button className="btn btn-primary" type="submit" disabled={loading}>
+              {loading ? "กำลังสมัครสมาชิก..." : "สมัครสมาชิก"}
+            </button>
+            <button className="btn btn-secondary" type="button" onClick={() => navigate("/login")}>
+              กลับไปหน้าเข้าสู่ระบบ
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

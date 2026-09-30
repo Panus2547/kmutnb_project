@@ -355,13 +355,12 @@ const updatePlanKpi = async (planId, userId, isAdmin, planKpiId, kpiData) => {
 };
 
 const updateBudget = async (budgetId, planId, userId, isAdmin, budgetData) => {
-  // 🟢 ดึงค่าโดยรองรับทั้ง allocated_amount และ allocate_amount
   const { 
     budget_source, 
     allocated_amount, 
     allocate_amount, 
     actual_amount 
-  } = budgetData;
+  } = budgetData || {};
 
   const allocated = allocated_amount ?? allocate_amount;
 
@@ -370,32 +369,22 @@ const updateBudget = async (budgetId, planId, userId, isAdmin, budgetData) => {
     UPDATE "budget"
     SET 
       budget_source    = COALESCE($1, budget_source),
-      allocated_amount = COALESCE($2, allocated_amount), -- 🟢 แก้เป็น allocated_amount
+      allocated_amount = COALESCE($2, allocated_amount),
       actual_amount    = COALESCE($3, actual_amount)
-    WHERE budget_id = $4
-      AND plan_id   = $5
-      AND (
-        $6 = true 
-        OR plan_id IN (
-          SELECT plan_id 
-          FROM "plan" 
-          WHERE plan_id = $5 AND created_by = $7
-        )
-      )
+    WHERE budget_id = $4::integer
+      AND plan_id   = $5::integer
     RETURNING *
     `,
     [
-      budget_source, // $1
-      allocated,     // $2
-      actual_amount, // $3
-      budgetId,      // $4
-      planId,        // $5
-      isAdmin,       // $6
-      userId         // $7
+      budget_source ?? null, // $1
+      allocated ?? null,     // $2
+      actual_amount ?? null, // $3
+      Number(budgetId),      // $4
+      Number(planId)         // $5
     ]
   );
 
-  return result.rows[0];
+  return result.rows[0] || null;
 };
 
 const replaceKpisForPlan = async (planId, kpis) => {

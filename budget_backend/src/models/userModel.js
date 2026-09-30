@@ -92,7 +92,89 @@ const login = async (email, password) => {
   };
 };
 
+const getUser = async () => {
+  try {
+    const result = await pool.query(`
+      SELECT 
+        user_id, 
+        username, 
+        email,
+        phone, 
+        role
+      FROM public.user
+      ORDER BY user_id ASC
+    `);
+    
+    return result.rows;
+  } catch (error) {
+    console.error("Database query error (getUser):", error);
+    throw error;
+  }
+};
+
+const editUser = async (userId, username, email, phone, role) => {
+  try {
+    const result = await pool.query(
+      `
+      UPDATE public.user
+      SET 
+        username = $1,
+        email = $2,
+        phone = $3,
+        role = $4
+      WHERE user_id = $5
+      RETURNING *;
+      `,
+      [username, email, phone, role, userId]
+    );
+
+    return result.rows[0]; // ส่งคืนข้อมูล user ที่แก้ไขเรียบร้อยแล้ว
+  } catch (error) {
+    console.error("Error in editUser:", error);
+    throw error;
+  }
+};
+
+const saveResetToken = async (email, token, expires) => {
+  const result = await pool.query(
+    `UPDATE "user" 
+     SET reset_token = $1, reset_token_expires = $2 
+     WHERE email = $3 
+     RETURNING user_id, email`,
+    [token, expires, email]
+  );
+  return result.rows[0];
+};
+
+// ค้นหาผู้ใช้จาก Reset Token และเช็คว่ายังไม่หมดอายุ
+const findUserByResetToken = async (token) => {
+  const result = await pool.query(
+    `SELECT * FROM "user" 
+     WHERE reset_token = $1 AND reset_token_expires > NOW()`,
+    [token]
+  );
+  return result.rows[0];
+};
+
+// อัปเดตรหัสผ่านใหม่ + ล้าง Token ออก
+const updatePassword = async (userId, hashedPassword) => {
+  await pool.query(
+    `UPDATE "user" 
+     SET password = $1, reset_token = NULL, reset_token_expires = NULL 
+     WHERE user_id = $2`,
+    [hashedPassword, userId]
+  );
+};
+
+
+
 module.exports = {
   register,
-  login
+  login,
+  getUser,
+  editUser,
+  findUserByResetToken,
+  updatePassword,
+  saveResetToken,
+
 };

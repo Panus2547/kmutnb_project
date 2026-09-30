@@ -204,47 +204,40 @@ const updateKpi = async (req, res) => {
 const updateBudget = async (req, res) => {
   try {
     const { planId, budgetId } = req.params;
-    
-    // ดึง userId และ role จาก Middleware (verifyToken)
-    const userId = req.user?.userId || req.user?.id;
-    const isAdmin = req.user?.role === "admin";
+    const decoded = req.user;
+    const userId = Number(decoded.user_id);
+    const isAdmin = decoded.role === "admin";
 
-    // ข้อมูล budgetData ที่ส่งมาจาก Frontend
-    const budgetData = req.body;
+    const plan = await planModel.getPlanByPlanId(planId);
 
-    // ตรวจสอบว่ามี planId และ budgetId ส่งมาหรือไม่
-    if (!planId || !budgetId) {
-      return res.status(400).json({ 
-        message: "กรุณาระบุ planId และ budgetId ให้ครบถ้วน" 
-      });
+    if (!plan) {
+      return res.status(404).json({ message: "ไม่พบแผนงานนี้" });
     }
 
-    // เรียกใช้ฟังก์ชัน Service/Model
-    const updatedBudget = await planModel.updateBudget(
+    const ownerId = Number(plan.created_by);
+
+    if (!isAdmin && ownerId !== userId) {
+      return res.status(403).json({ message: "คุณไม่มีสิทธิ์แก้ไขงบประมาณของแผนงานนี้" });
+    }
+
+    // 🟢 เรียงลำดับ arguments ให้ตรงกับ Model: (budgetId, planId, userId, isAdmin, budgetData)
+    const result = await planModel.updateBudget(
       budgetId,
       planId,
       userId,
       isAdmin,
-      budgetData
+      req.body
     );
 
-    if (!updatedBudget) {
-      return res.status(404).json({ 
-        message: "ไม่พบข้อมูลรายการงบประมาณ หรือคุณไม่มีสิทธิ์แก้ไขรายการนี้" 
-      });
+    if (!result) {
+      return res.status(404).json({ message: "ไม่พบรายการงบประมาณนี้ในแผนงาน" });
     }
 
-    return res.status(200).json({
-      message: "อัปเดตข้อมูลรายการงบประมาณสำเร็จ",
-      data: updatedBudget,
-    });
+    return res.json(result);
 
   } catch (error) {
-    console.error("Error in updateBudget Controller:", error);
-    return res.status(500).json({ 
-      message: "เกิดข้อผิดพลาดภายในเซิร์ฟเวอร์", 
-      error: error.message 
-    });
+    console.error("Update Budget Error:", error);
+    return res.status(500).json({ message: "เกิดข้อผิดพลาดในการแก้ไขงบประมาณ" });
   }
 };
 

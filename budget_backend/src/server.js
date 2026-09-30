@@ -1,3 +1,4 @@
+require("dotenv").config(); // 🟢 ต้องอยู่บรรทัดแรกสุดก่อนเรียกใช้ routes หรือ controllers
 const express = require("express");
 const cors = require("cors");
 const pool = require("./db");

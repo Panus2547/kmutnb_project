@@ -294,6 +294,7 @@ function AddPlanModal({ isOpen, onClose, onSuccess }) {
         <option value="งปม.แผ่นดิน">งปม.แผ่นดิน</option>
         <option value="เงินกองทุนพัฒนา">เงินกองทุนพัฒนา</option>
         <option value="เงินบริจาค/อุดหนุน">เงินบริจาค/อุดหนุน</option>
+        <option value="ไม่ใช้งบประมาณ">ไม่ใช้งบประมาณ</option>
         <option value="อื่นๆ">อื่นๆ</option>
       </select>
 
