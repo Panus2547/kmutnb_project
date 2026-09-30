@@ -5,21 +5,10 @@ import { useNavigate, Link } from "react-router-dom";
 // ดึง API URL จาก Env ของ Vite ถ้าไม่มีให้ชี้ไปที่ Render
 const API_BASE_URL = import.meta.env.VITE_API_URL || "https://spms-backend-ry26.onrender.com";
 
-
 function Auth() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
-  // ดึงค่ามา แล้วล้างวงเล็บ หรือสัญลักษณ์แปลกๆ ออกให้เหลือเฉพาะ URL ที่ขึ้นต้นด้วย https://
-let rawUrl = import.meta.env.VITE_API_URL || "https://spms-backend-ry26.onrender.com";
-
-// ถ้ามีวงเล็บติดมา ให้ดึงเอาเฉพาะตัว URL ข้างใน หรือใช้ Fallback
-const cleanUrl = rawUrl.includes("http") 
-  ? rawUrl.match(/https?:\/\/[^\s\)\\]+/)?.[0] || "https://spms-backend-ry26.onrender.com"
-  : "https://spms-backend-ry26.onrender.com";
-
-const API_BASE_URL = cleanUrl;
 
   const navigate = useNavigate();
 
@@ -28,8 +17,7 @@ const API_BASE_URL = cleanUrl;
     setLoading(true);
 
     try {
-      // ✅ แก้ไข: เปลี่ยนจาก http://localhost:5000 เป็น ${API_BASE_URL}
-      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+      const response = await fetch(`http://localhost:5000/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -102,12 +90,13 @@ const API_BASE_URL = cleanUrl;
               สมัครสมาชิกใหม่
             </button>
             <Link 
-              to="/forgot-password" 
-              style={{ color: "#007bff", fontSize: "0.88rem", textDecoration: "none" }}
-            >
-              🔑 ลืมรหัสผ่าน?
-            </Link>
+        to="/forgot-password" 
+        style={{ color: "#007bff", fontSize: "0.88rem", textDecoration: "none" }}
+      >
+        🔑 ลืมรหัสผ่าน?
+      </Link>
           </div>
+          
         </form>
       </div>
     </div>
