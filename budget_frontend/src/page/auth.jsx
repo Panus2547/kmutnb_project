@@ -17,7 +17,8 @@ function Auth() {
     setLoading(true);
 
     try {
-      const response = await fetch(`http://localhost:5000/api/auth/login`, {
+      // ✅ แก้ไข: เปลี่ยนจาก http://localhost:5000 เป็น ${API_BASE_URL}
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -90,13 +91,12 @@ function Auth() {
               สมัครสมาชิกใหม่
             </button>
             <Link 
-        to="/forgot-password" 
-        style={{ color: "#007bff", fontSize: "0.88rem", textDecoration: "none" }}
-      >
-        🔑 ลืมรหัสผ่าน?
-      </Link>
+              to="/forgot-password" 
+              style={{ color: "#007bff", fontSize: "0.88rem", textDecoration: "none" }}
+            >
+              🔑 ลืมรหัสผ่าน?
+            </Link>
           </div>
-          
         </form>
       </div>
     </div>
